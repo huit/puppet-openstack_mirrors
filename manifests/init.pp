@@ -37,8 +37,12 @@
 #
 class openstack_mirrors (
   $el_versions = $openstack_mirrors::params::el_versions,
+  $os_versions = $openstack_mirrors::params::os_versions,
   $mrepo_source = $openstack_mirrors::params::mrepo_source,
   $centos_mirror = $openstack_mirrors::params::centos_mirror,
+  $epel_mirror = $openstack_mirrors::params::epel_mirror,
+  $rdo_mirror = $openstack_mirrors::params::rdo_mirror,
+  $pl_mirror = $openstack_mirrors::params::pl_mirror,
 ) inherits openstack_mirrors::params {
 
   class { 'mrepo': }
@@ -49,4 +53,27 @@ class openstack_mirrors (
     mirror  => $centos_mirror,
   }
 
+  openstack_mirrors::epel { 'epel-6-x86_64':
+    release => '6',
+    arch    => 'x86_64',
+    mirror  => $epel_mirror,
+  }
+
+  openstack_mirrors::rdo { 'rdo-havana-6':
+    release    => 'havana',
+    el_release => '6',
+    mirror     => $rdo_mirror,
+  }
+
+  openstack_mirrors::rdo { 'rdo-icehouse-6':
+    release    => 'icehouse',
+    el_release => '6',
+    mirror     => $rdo_mirror,
+  }
+
+  openstack_mirrors::pl { 'pl-6-x86_64':
+    release => '6',
+    arch    => 'x86_64',
+    mirror  => $pl_mirror,
+  }
 }
