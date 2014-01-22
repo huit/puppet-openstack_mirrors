@@ -1,6 +1,6 @@
 # == Class: openstack_mirrors
 #
-# Full description of class openstack_mirrors here.
+# Set up mirrors for HUIT OpenStack deployment.
 #
 # === Parameters
 #
@@ -29,13 +29,26 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Steve Huff <steve_huff@harvard.edu>
 #
 # === Copyright
 #
-# Copyright 2014 Your name here, unless otherwise noted.
+# Copyright 2014 President and Fellows of Harvard College
 #
-class openstack_mirrors {
+class openstack_mirrors (
+  $el_versions = $openstack_mirrors::params::el_versions,
+  $centos_mirror = $openstack_mirrors::params::centos_mirror,
+  $centos_proto = $openstack_mirrors::params::centos_proto,
+) inherits openstack_mirrors::params {
 
+  class { 'mrepo': }
+
+  openstack_mirrors::centos { 'centos-6-x86_64':
+    release => '6',
+    arch    => 'x86_64',
+    mirror  => $centos_mirror,
+    proto   => $centos_proto,
+    require => Class['mrepo'],
+  }
 
 }
