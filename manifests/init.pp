@@ -37,18 +37,20 @@
 #
 class openstack_mirrors (
   $el_versions = $openstack_mirrors::params::el_versions,
+  $mrepo_source = $openstack_mirrors::params::mrepo_source,
   $centos_mirror = $openstack_mirrors::params::centos_mirror,
   $centos_proto = $openstack_mirrors::params::centos_proto,
 ) inherits openstack_mirrors::params {
 
-  class { 'mrepo': }
+  class { 'mrepo':
+    source => $openstack_mirrors::mrepo_source,
+  }
 
   openstack_mirrors::centos { 'centos-6-x86_64':
     release => '6',
     arch    => 'x86_64',
     mirror  => $centos_mirror,
     proto   => $centos_proto,
-    require => Class['mrepo'],
   }
 
 }
