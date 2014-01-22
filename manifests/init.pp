@@ -76,4 +76,10 @@ class openstack_mirrors (
     arch    => 'x86_64',
     mirror  => $pl_mirror,
   }
+
+  firewall { '080 Permit HTTP traffic for mrepo':
+    ensure => 'present',
+    action => 'accept',
+    dport  => '80',
+  }
 }
