@@ -2,7 +2,6 @@ define openstack_mirrors::centos (
   $release,
   $arch,
   $mirror,
-  $proto,
 ) {
   mrepo::repo { "centos-${release}-${arch}":
     ensure    => 'present',
@@ -12,8 +11,8 @@ define openstack_mirrors::centos (
     release   => $release,
     arch      => $arch,
     urls      => {
-      extras  => join(["${proto}://${mirror}", '/$release/$repo/$arch/'], ''),
-      updates => join(["${proto}://${mirror}", '/$release/$repo/$arch/'], ''),
+      extras  => join([$mirror, '/$release/$repo/$arch/'], ''),
+      updates => join([$mirror, '/$release/$repo/$arch/'], ''),
     },
   }
 }
