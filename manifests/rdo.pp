@@ -2,6 +2,7 @@ define openstack_mirrors::rdo (
   $release,
   $el_release,
   $mirror,
+  $arch = 'x86_64',
 ) {
   mrepo::repo { "rdo-${release}-el${el_release}":
     ensure    => 'present',
@@ -9,6 +10,7 @@ define openstack_mirrors::rdo (
     update    => 'nightly',
     repotitle => "RDO ${release} EL${el_release}",
     release   => $release,
+    arch      => $arch,
     urls      => {
       rdo => join([$mirror, '/openstack-$release/', "epel-${el_release}"], ''),
     },
