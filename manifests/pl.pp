@@ -17,7 +17,7 @@ define openstack_mirrors::pl (
   }
 
   @@yumrepo { 'puppetlabs':
-    baseurl  => "http://${::fqdn}/foreman-${release}-${arch}/RPMS.products",
+    baseurl  => "http://${::fqdn}/pl-${release}-${arch}/RPMS.products",
     descr    => 'Puppet Labs Products',
     enabled  => 1,
     gpgcheck => 0,
@@ -25,7 +25,7 @@ define openstack_mirrors::pl (
   }
 
   @@yumrepo { 'puppetlabs-dependencies':
-    baseurl  => "http://${::fqdn}/foreman-${release}-${arch}/RPMS.dependencies",
+    baseurl  => "http://${::fqdn}/pl-${release}-${arch}/RPMS.dependencies",
     descr    => 'Puppet Labs Dependencies',
     enabled  => 1,
     gpgcheck => 0,
