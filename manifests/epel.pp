@@ -9,7 +9,6 @@ define openstack_mirrors::epel (
 
   $releasearch = split($title, '-')
   validate_array($releasearch)
-  validate_slength($releasearch, 2)
 
   $release = $releasearch[0]
   $arch = $releasearch[1]
