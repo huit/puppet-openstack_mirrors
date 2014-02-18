@@ -36,27 +36,43 @@
 # Copyright 2014 President and Fellows of Harvard College
 #
 class openstack_mirrors (
-  $el_versions = $openstack_mirrors::params::el_versions,
-  $os_versions = $openstack_mirrors::params::os_versions,
-  $mrepo_source = $openstack_mirrors::params::mrepo_source,
+  $el_source     = $openstack_mirrors::params::el_source,
+  $el_versions   = $openstack_mirrors::params::el_versions,
+  $epel          = $openstack_mirrors::params::epel,
+  $os_versions   = $openstack_mirrors::params::os_versions,
+  $mrepo_source  = $openstack_mirrors::params::mrepo_source,
   $centos_mirror = $openstack_mirrors::params::centos_mirror,
-  $epel_mirror = $openstack_mirrors::params::epel_mirror,
-  $rdo_mirror = $openstack_mirrors::params::rdo_mirror,
-  $pl_mirror = $openstack_mirrors::params::pl_mirror,
+  $epel_mirror   = $openstack_mirrors::params::epel_mirror,
+  $rdo_mirror    = $openstack_mirrors::params::rdo_mirror,
+  $pl_mirror     = $openstack_mirrors::params::pl_mirror,
 ) inherits openstack_mirrors::params {
+
+  validate_bool($openstack_mirrors::epel)
 
   class { 'mrepo': }
 
-  openstack_mirrors::centos { 'centos-6-x86_64':
-    release => '6',
-    arch    => 'x86_64',
-    mirror  => $centos_mirror,
+  if $openstack_mirrors::el_versions {
+    case $openstack_mirrors::el_source {
+      'centos': {
+        openstack_mirrors::centos { $openstack_mirrors::el_versions:
+          mirror  => $centos_mirror,
+        }
+      }
+      'redhat': {
+        fail('RHEL support is not yet implemented.')
+      }
+      default: {
+        fail("'${openstack_mirrors::el_source}' is not a valid value for \$el_source.")
+      }
+    }
   }
 
-  openstack_mirrors::epel { 'epel-6-x86_64':
-    release => '6',
-    arch    => 'x86_64',
-    mirror  => $epel_mirror,
+  if $openstack_mirrors::epel {
+    if $openstack_mirrors::el_versions {
+      openstack_mirrors::epel { $openstack_mirrors::el_versions:
+        mirror  => $epel_mirror,
+      }
+    }
   }
 
   openstack_mirrors::rdo { 'rdo-havana-6':
