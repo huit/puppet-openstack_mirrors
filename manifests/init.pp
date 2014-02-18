@@ -36,15 +36,16 @@
 # Copyright 2014 President and Fellows of Harvard College
 #
 class openstack_mirrors (
-  $el_source     = $openstack_mirrors::params::el_source,
-  $el_versions   = $openstack_mirrors::params::el_versions,
-  $epel          = $openstack_mirrors::params::epel,
-  $os_versions   = $openstack_mirrors::params::os_versions,
-  $mrepo_source  = $openstack_mirrors::params::mrepo_source,
-  $centos_mirror = $openstack_mirrors::params::centos_mirror,
-  $epel_mirror   = $openstack_mirrors::params::epel_mirror,
-  $rdo_mirror    = $openstack_mirrors::params::rdo_mirror,
-  $pl_mirror     = $openstack_mirrors::params::pl_mirror,
+  $el_source      = $openstack_mirrors::params::el_source,
+  $el_versions    = $openstack_mirrors::params::el_versions,
+  $epel           = $openstack_mirrors::params::epel,
+  $os_versions    = $openstack_mirrors::params::os_versions,
+  $mrepo_source   = $openstack_mirrors::params::mrepo_source,
+  $centos_mirror  = $openstack_mirrors::params::centos_mirror,
+  $epel_mirror    = $openstack_mirrors::params::epel_mirror,
+  $rdo_mirror     = $openstack_mirrors::params::rdo_mirror,
+  $pl_mirror      = $openstack_mirrors::params::pl_mirror,
+  $foreman_mirror = $openstack_mirrors::params::foreman_mirror,
 ) inherits openstack_mirrors::params {
 
   validate_bool($openstack_mirrors::epel)
@@ -91,6 +92,12 @@ class openstack_mirrors (
     release => '6',
     arch    => 'x86_64',
     mirror  => $pl_mirror,
+  }
+
+  openstack_mirrors::foreman { 'foreman-1.4-x86_64':
+    release => '1.4',
+    arch    => 'x86_64',
+    mirror  => $foreman_mirror,
   }
 
   firewall { '080 Permit HTTP traffic for mrepo':

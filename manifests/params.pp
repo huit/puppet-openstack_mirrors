@@ -11,4 +11,5 @@ class openstack_mirrors::params {
   $epel_mirror = 'http://mirror.seas.harvard.edu/epel'
   $rdo_mirror = 'http://repos.fedorapeople.org/repos/openstack'
   $pl_mirror = 'http://yum.puppetlabs.com/el'
+  $foreman_mirror = 'http://yum.theforeman.org'
 } # Class:: openstack_mirrors::params
