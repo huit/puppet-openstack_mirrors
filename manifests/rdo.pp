@@ -15,4 +15,12 @@ define openstack_mirrors::rdo (
       rdo => join([$mirror, '/openstack-$release/', "epel-${el_release}"], ''),
     },
   }
+
+  @@yumrepo { "rdo-${release}":
+    baseurl  => "http://${::fqdn}/rdo-${release}-${arch}/RPMS.rdo",
+    descr    => "RDO ${release} for EPEL ${el_release}",
+    enabled  => 1,
+    gpgcheck => 0,
+    proxy    => 'absent',
+  }
 }

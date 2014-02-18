@@ -15,4 +15,20 @@ define openstack_mirrors::pl (
       products     => join([$mirror, '/$release/$repo/$arch/'], ''),
     },
   }
+
+  @@yumrepo { 'puppetlabs':
+    baseurl  => "http://${::fqdn}/foreman-${release}-${arch}/RPMS.products",
+    descr    => 'Puppet Labs Products',
+    enabled  => 1,
+    gpgcheck => 0,
+    proxy    => 'absent',
+  }
+
+  @@yumrepo { 'puppetlabs-dependencies':
+    baseurl  => "http://${::fqdn}/foreman-${release}-${arch}/RPMS.dependencies",
+    descr    => 'Puppet Labs Dependencies',
+    enabled  => 1,
+    gpgcheck => 0,
+    proxy    => 'absent',
+  }
 }

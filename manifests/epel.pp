@@ -24,4 +24,12 @@ define openstack_mirrors::epel (
       epel => join([$mirror, '/$release/$arch/'], ''),
     },
   }
+
+  @@yumrepo { 'epel':
+    baseurl  => "http://${::fqdn}/epel-${release}-${arch}/RPMS.epel",
+    descr    => "EPEL ${release} ${arch}",
+    enabled  => 1,
+    gpgcheck => 0,
+    proxy    => 'absent',
+  }
 }
