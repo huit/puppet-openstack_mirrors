@@ -51,13 +51,6 @@ class openstack_mirrors (
 
   class { 'mrepo': }
 
-  class { 'mrepo::params':
-    src_root    => '/opt/mrepo',
-    www_root    => '/opt/www/mrepo',
-    http_proxy  => 'http://proxy.noc.harvard.edu:3128',
-    https_proxy => 'http://proxy.noc.harvard.edu:3128',
-  }
-
   if $openstack_mirrors::el_versions {
     case $openstack_mirrors::el_source {
       'centos': {
