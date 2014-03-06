@@ -100,9 +100,15 @@ class openstack_mirrors (
     mirror  => $foreman_mirror,
   }
 
-  firewall { '080 Permit HTTP traffic for mrepo':
+  openstack_mirrors::foreman { 'foreman-1.3-x86_64':
+    release => '1.3',
+    arch    => 'x86_64',
+    mirror  => $foreman_mirror,
+  }
+
+  firewall { '080 Permit HTTP traffic for deployment server':
     ensure => 'present',
     action => 'accept',
-    dport  => '80',
+    dport  => ['80', '8080'],
   }
 }
