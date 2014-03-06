@@ -8,6 +8,7 @@ class openstack_mirrors::params {
   $el_versions    = [ '6-x86_64' ]
   $os_versions    = [ 'havana', 'icehouse' ]
   $centos_mirror  = 'http://mirror.seas.harvard.edu/centos'
+  $rhn_uuid       = ''
   $epel_mirror    = 'http://mirror.seas.harvard.edu/epel'
   $rdo_mirror     = 'http://repos.fedorapeople.org/repos/openstack'
   $pl_mirror      = 'http://yum.puppetlabs.com/el'

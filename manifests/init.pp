@@ -42,6 +42,7 @@ class openstack_mirrors (
   $os_versions    = $openstack_mirrors::params::os_versions,
   $mrepo_source   = $openstack_mirrors::params::mrepo_source,
   $centos_mirror  = $openstack_mirrors::params::centos_mirror,
+  $rhn_uuid       = $openstack_mirrors::params::rhn_uuid,
   $epel_mirror    = $openstack_mirrors::params::epel_mirror,
   $rdo_mirror     = $openstack_mirrors::params::rdo_mirror,
   $pl_mirror      = $openstack_mirrors::params::pl_mirror,
@@ -61,6 +62,7 @@ class openstack_mirrors (
       }
       'redhat': {
         openstack_mirrors::redhat { $openstack_mirrors::el_versions:
+          uuid => $openstack_mirrors::rhn_uuid,
         }
       }
       default: {
