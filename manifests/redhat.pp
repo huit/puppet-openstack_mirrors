@@ -15,7 +15,7 @@ define openstack_mirrors::redhat (
   }
 
   $release = $releasearch[0]
-  $release = $rhnreleases[$release]
+  $rhnrelease = $rhnreleases[$release]
   $arch = $releasearch[1]
 
   mrepo::repo { "redhat-${release}-${arch}":
