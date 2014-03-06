@@ -20,16 +20,15 @@ define openstack_mirrors::redhat (
   $arch = $releasearch[1]
 
   mrepo::repo { "redhat-${release}-${arch}":
-    ensure    => 'present',
-    require   => Class['mrepo'],
-    update    => 'nightly',
-    repotitle => "Red Hat Enterprise Linux ${release} ${arch}",
-    release   => $release,
-    arch      => $arch,
-    urls      => {
-      os      => join([$mirror, '/$release/$repo/$arch/'], ''),
-      extras  => join([$mirror, '/$release/$repo/$arch/'], ''),
-      updates => join([$mirror, '/$release/$repo/$arch/'], ''),
+    ensure     => 'present',
+    require    => Class['mrepo'],
+    update     => 'nightly',
+    repotitle  => "Red Hat Enterprise Linux ${release} ${arch}",
+    release    => $release,
+    rhnrelease => $rhnrelease,
+    arch       => $arch,
+    urls       => {
+      os       => join([$mirror, '/$release/$repo/$arch/'], ''),
     },
   }
 

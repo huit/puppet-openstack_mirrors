@@ -16,7 +16,7 @@ define openstack_mirrors::foreman (
     },
   }
 
-  @@yumrepo { 'foreman':
+  @@yumrepo { "foreman-${release}":
     baseurl  => "http://${::fqdn}/foreman-${release}-${arch}/RPMS.releases",
     descr    => "Foreman ${release}",
     enabled  => 1,
@@ -24,7 +24,7 @@ define openstack_mirrors::foreman (
     proxy    => 'absent',
   }
 
-  @@yumrepo { 'foreman-plugins':
+  @@yumrepo { "foreman-plugins-${release}":
     baseurl  => "http://${::fqdn}/foreman-${release}-${arch}/RPMS.plugins",
     descr    => "Foreman ${release} plugins",
     enabled  => 1,
