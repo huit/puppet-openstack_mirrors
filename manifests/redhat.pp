@@ -6,10 +6,16 @@ define openstack_mirrors::redhat (
     "'${title}' is not of the form '6-x86_64'."
   )
 
+  $rhnreleases = {
+    '6' => '6Server',
+    '5' => '5Server',
+  }
+
   $releasearch = split($title, '-')
   validate_array($releasearch)
 
   $release = $releasearch[0]
+  $rhnrelease = $rhnreleases[$release]
   $arch = $releasearch[1]
 
   mrepo::repo { "redhat-${release}-${arch}":
@@ -17,7 +23,7 @@ define openstack_mirrors::redhat (
     require   => Class['mrepo'],
     update    => 'nightly',
     repotitle => "Red Hat Enterprise Linux ${release} ${arch}",
-    release   => $release,
+    release   => $rhnrelease,
     type      => 'rhn',
     arch      => $arch,
     urls      => {
@@ -31,5 +37,13 @@ define openstack_mirrors::redhat (
     enabled  => 1,
     gpgcheck => 0,
     proxy    => 'absent',
+  }
+
+  file { '/etc/sysconfig/rhn/sources':
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => 'up2date default',
   }
 }
