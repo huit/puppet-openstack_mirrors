@@ -60,7 +60,8 @@ class openstack_mirrors (
         }
       }
       'redhat': {
-        fail('RHEL support is not yet implemented.')
+        openstack_mirrors::redhat { $openstack_mirrors::el_versions:
+        }
       }
       default: {
         fail("'${openstack_mirrors::el_source}' is not a valid value for \$el_source.")

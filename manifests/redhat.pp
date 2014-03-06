@@ -1,5 +1,4 @@
 define openstack_mirrors::redhat (
-  $mirror,
 ) {
   validate_re(
     $title,
@@ -28,29 +27,13 @@ define openstack_mirrors::redhat (
     rhnrelease => $rhnrelease,
     arch       => $arch,
     urls       => {
-      os       => join([$mirror, '/$release/$repo/$arch/'], ''),
+      "rhel${release}-${arch}" => "rhns:///rhel-${arch}-server-${release}",
     },
   }
 
-  @@yumrepo { 'redhat-base':
-    baseurl  => "http://${::fqdn}/redhat-${release}-${arch}/RPMS.os",
+  @@yumrepo { "rhel${release}-${arch}":
+    baseurl  => "http://${::fqdn}/redhat-${release}-${arch}/rhel${release}-${arch}",
     descr    => "Red Hat Enterprise Linux ${release} - base",
-    enabled  => 1,
-    gpgcheck => 0,
-    proxy    => 'absent',
-  }
-
-  @@yumrepo { 'redhat-updates':
-    baseurl  => "http://${::fqdn}/redhat-${release}-${arch}/RPMS.updates",
-    descr    => "Red Hat Enterprise Linux ${release} - updates",
-    enabled  => 1,
-    gpgcheck => 0,
-    proxy    => 'absent',
-  }
-
-  @@yumrepo { 'redhat-extras':
-    baseurl  => "http://${::fqdn}/redhat-${release}-${arch}/RPMS.extras",
-    descr    => "Red Hat Enterprise Linux ${release} - extras",
     enabled  => 1,
     gpgcheck => 0,
     proxy    => 'absent',
