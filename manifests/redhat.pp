@@ -1,4 +1,5 @@
 define openstack_mirrors::redhat (
+  $uuid,
 ) {
   validate_re(
     $title,
@@ -17,6 +18,22 @@ define openstack_mirrors::redhat (
   $release = $releasearch[0]
   $rhnrelease = $rhnreleases[$release]
   $arch = $releasearch[1]
+
+  file { '/etc/sysconfig/rhn/up2date-uuid':
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template('openstack_mirrors/etc/sysconfig/rhn/up2date-uuid.erb'),
+  } ->
+
+  file { '/etc/sysconfig/rhn/sources':
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => 'up2date default',
+  } ->
 
   mrepo::repo { "redhat-${release}-${arch}":
     ensure    => 'present',
@@ -37,13 +54,5 @@ define openstack_mirrors::redhat (
     enabled  => 1,
     gpgcheck => 0,
     proxy    => 'absent',
-  }
-
-  file { '/etc/sysconfig/rhn/sources':
-    ensure  => 'present',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => 'up2date default',
   }
 }
