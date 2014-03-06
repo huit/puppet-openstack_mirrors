@@ -10,7 +10,6 @@ define openstack_mirrors::redhat (
   validate_array($releasearch)
 
   $release = $releasearch[0]
-  $rhnrelease = $rhnreleases[$release]
   $arch = $releasearch[1]
 
   mrepo::repo { "redhat-${release}-${arch}":
