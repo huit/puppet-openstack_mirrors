@@ -44,7 +44,9 @@ define openstack_mirrors::redhat (
     type      => 'rhn',
     arch      => $arch,
     urls      => {
-      "rhel${release}-${arch}" => "rhns:///rhel-${arch}-server-${release}",
+      "rhel${release}-${arch}"                    => "rhns:///rhel-${arch}-server-${release}",
+      "jbappplatform-6-${arch}-server-${release}" => "rhns:///jbappplatform-6-${arch}-server-${release}-rpm",
+      "jb-ews-2-${arch}-server-${release}-rpm"    => "rhns:///jb-ews-2-${arch}-server-${release}-rpm",
     },
   }
 
