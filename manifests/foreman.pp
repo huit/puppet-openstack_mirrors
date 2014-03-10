@@ -7,7 +7,7 @@ define openstack_mirrors::foreman (
     ensure    => 'present',
     require   => Class['mrepo'],
     update    => 'nightly',
-    repotitle => "Puppet Labs ${release} ${arch}",
+    repotitle => "Foreman ${release} ${arch}",
     release   => $release,
     arch      => $arch,
     urls      => {
